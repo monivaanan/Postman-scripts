@@ -1,0 +1,347 @@
+{
+	"info": {
+		"_postman_id": "6b8f4b0f-7692-425a-b7ec-1ff046344210",
+		"name": "JIRA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search for all issues",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ODWNgjWGBWQ6PLeMtv2W4C66",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Hari.radhakrishnan@testleaf.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/search?jql=project=\"RA\"&startAt=51&maxResults=150",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"search"
+					],
+					"query": [
+						{
+							"key": "jql",
+							"value": "project=\"RA\""
+						},
+						{
+							"key": "startAt",
+							"value": "51"
+						},
+						{
+							"key": "maxResults",
+							"value": "150"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all issue types",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Hari.radhakrishnan@testleaf.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "ODWNgjWGBWQ6PLeMtv2W4C66",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/issuetype",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issuetype"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List the specific issue with the ID",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ODWNgjWGBWQ6PLeMtv2W4C66",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Hari.radhakrishnan@testleaf.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/issue/RA-5378",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"RA-5378"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an Issue in Jira",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ODWNgjWGBWQ6PLeMtv2W4C66",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Hari.radhakrishnan@testleaf.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"fields\": {\r\n \"project\":\r\n {\r\n \"key\": \"RA\"\r\n },\r\n \"summary\": \"assiweek1\",\r\n \"description\": \"assiweek1\",\r\n \"issuetype\": {\r\n \"name\": \"Story\"\r\n }\r\n }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/issue/",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Issue Based on the Issue ID or Key",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ODWNgjWGBWQ6PLeMtv2W4C66",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Hari.radhakrishnan@testleaf.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/issue/RA-5911",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"RA-5911"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit an Issue in Jira",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ODWNgjWGBWQ6PLeMtv2W4C66",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Hari.radhakrishnan@testleaf.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"fields\": {\r\n \"description\": \"Bug creation Using REST API for testing_update_MonishaREstAssuredmmmmmmmmmmmmmmmmmmmmmmmm\"\r\n }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/issue/16023",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"16023"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an Issue in Jira",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ODWNgjWGBWQ6PLeMtv2W4C66",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Hari.radhakrishnan@testleaf.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/issue/RA-5413",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"RA-5413"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "Tuna@321",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

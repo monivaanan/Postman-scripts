@@ -1,0 +1,367 @@
+{
+	"info": {
+		"_postman_id": "f31a7881-f345-48ea-b508-bd0b81425f08",
+		"name": "Postman_testscripts_Jira",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create new issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();   //Reads response\r",
+							"\r",
+							"pm.globals.set(\"issue_id\",response.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"fields\": {\r\n \"project\":\r\n {\r\n \"key\": \"{{key}}\"\r\n },\r\n \"summary\": \"{{summary}}\",\r\n \"description\": \"{{description}}\",\r\n \"issuetype\": {\r\n \"name\": \"{{type}}\"\r\n }\r\n }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/issue",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all the JIRA issues created in the last 24 hours",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"//count issues created in last one day\r",
+							"var response = pm.response.json();   //Reads response\r",
+							"var issueCount=response.issues.length;  //Reads issue count length\r",
+							"\r",
+							"var currentTime = new Date().getTime();  //store curret time in a variable\r",
+							"//console.log(currentTime);\r",
+							"var last24hours = currentTime-(24 * 60 * 60 * 1000);\r",
+							"\r",
+							"\r",
+							"var latestCount=0;\r",
+							"for(var i=0;i<issueCount;i++){\r",
+							"if(new Date(response.issues[i].fields.created).getTime()>last24hours\r",
+							"){\r",
+							"\r",
+							"    console.log(response.issues[i].id);\r",
+							"}\r",
+							"}\r",
+							"console.log(issueCount);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/search?jql=project=\"RA\"",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"search"
+					],
+					"query": [
+						{
+							"key": "jql",
+							"value": "project=\"RA\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get issue random",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();   //Reads response\r",
+							"var issueCount=response.issues.length;\r",
+							"\r",
+							"pm.globals.set(\"count_beforeDelete\",issueCount);\r",
+							"\r",
+							"var ranNum=Math.floor(Math.random()*issueCount);\r",
+							"\r",
+							"var ranId=response.issues[ranNum].id;\r",
+							"console.log(ranId);\r",
+							"pm.globals.set(\"issue_id\",ranId)\r",
+							"\r",
+							"console.log(issueCount);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/search?jql=project=RS",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"search"
+					],
+					"query": [
+						{
+							"key": "jql",
+							"value": "project=RS"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an Issue ID - randomly",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/issue/{{issue_id}}",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{issue_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Count after delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();   //Reads response\r",
+							"var count_afterDelete=response.issues.length;\r",
+							"\r",
+							"console.log(count_afterDelete);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//pm.globals.set(\"count_afterDelete\",issue_Count);\r",
+							"\r",
+							"//if (count_afterDelete == pm.globals.get(\"count_beforeDelete\")-1){\r",
+							" //   console.log(\"Deleted success\");\r",
+							"   \r",
+							"//}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/search?jql=project=RS",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"search"
+					],
+					"query": [
+						{
+							"key": "jql",
+							"value": "project=RS"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attach files to the issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();   //Reads response\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.globals.set(\"issue_id\",response.id);\r",
+							"\r",
+							"pm.test(\"Response time is less than 5000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Atlassian-Token",
+						"value": "no-check",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "IMG_E1546.JPG"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/issue/{{issue_id}}/attachments",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{issue_id}}",
+						"attachments"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "ODWNgjWGBWQ6PLeMtv2W4C66",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "Hari.radhakrishnan@testleaf.com",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
